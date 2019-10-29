@@ -28,7 +28,8 @@ router.post('/create', async (req, res) => {
     } catch (err) {
         const response = {
             statusCode: 404,
-            error: err.name
+            message: err.message,
+            error: err
         }
         res.status(404).json(response);
     }
