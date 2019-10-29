@@ -7,9 +7,36 @@ const bodyParser = require('body-parser');
 //config body parser
 app.use(bodyParser.urlencoded({ extended: true })); //menangkap type request dalam bentuk form urlencoded
 app.use(bodyParser.json()); //menangkap url dalam bentuk json
-
-//run aplikasi
 //nanti commit -m "config body parser"
+
+//memanggil MongoConfig.js
+const Mongoose = require('./MongoModel/MongoConfig')
+const PersonModel = Mongoose.model("person", {
+    firstname: String,
+    lastname: String
+});
+
+//membuat request post
+// nama request firstName, lastName
+app.post('/profile', async (req, res) => {
+    const insert = {
+        firstName: req.body.firstName,
+        lastName: req.body.lastName
+    }
+    var person = new PersonModel(insert);
+    var result = await person.save();
+    const response = {
+        statusCode: 200,
+        error: '',
+        message: 'create person',
+        content: result
+    }
+    res.json(response);
+})
+
+
+//Run aplikasi
+app.get('/', (req, res) => res.send('Hello World!'))
 
 // membuat request post
 
@@ -18,6 +45,7 @@ app.post('/hello', function (req, res) {
         statusCode: 200,
         error: '',
         message: 'Hello JSON',
+        content: req.body
     }
     res.json(respon);
 })
