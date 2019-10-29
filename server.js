@@ -34,12 +34,7 @@ app.post('/profile', async (req, res) => {
     res.json(response);
 })
 
-
-//Run aplikasi
-app.get('/', (req, res) => res.send('Hello World!'))
-
 // membuat request post
-
 app.post('/hello', function (req, res) {
     const respon = {
         statusCode: 200,
@@ -49,6 +44,23 @@ app.post('/hello', function (req, res) {
     }
     res.json(respon);
 })
+
+//menampilkan semua data
+//url http://localhost:3000/profile/list
+app.get('/profile/list', async (req, res) => {
+    //Do something here 
+    var person = await PersonModel.find().exec();
+    const response = {
+        statusCode: 200,
+        error: '',
+        message: 'List Person',
+        content: person
+    }
+    res.json(response);
+})
+
+//Run aplikasi
+app.get('/', (req, res) => res.send('Hello World!'))
 
 //commit lagi dengan nama "membuat request post" lalu push
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
