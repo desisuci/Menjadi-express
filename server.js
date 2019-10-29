@@ -127,9 +127,9 @@ app.get('/profile/delete/(:id)', async (req, res) => {
     res.status(statusCode).json(response);
 })
 
+//Membuat/create profile data menggunakan validasi
 //url : http://localhost:3000/profile/create
 app.post('/profile/create', async (req, res) => {
-    //Do something here
     console.log(req.body)
     if (!req.body.firstName) {
         res.status(400).json({
@@ -137,15 +137,13 @@ app.post('/profile/create', async (req, res) => {
             error: 'firstName parameter is required',
             message: 'firstName parameter is required'
         });
-    }
-    else if (!req.body.lastName) {
+    } else if (!req.body.lastName) {
         res.status(400).json({
             statusCode: 400,
             error: 'firstName parameter is required',
             message: 'firstName parameter is required'
         });
-    }
-    else {
+    } else {
         const insert = {
             firstName: req.body.firstName,
             lastName: req.body.lastName
@@ -161,6 +159,10 @@ app.post('/profile/create', async (req, res) => {
         res.json(response);
     }
 });
+
+//membuat route
+var todoRoute = require('./routes/todoRoute');
+app.use('/todo', todoRoute);
 
 //Run aplikasi
 app.get('/', (req, res) => res.send('Hello World!'))
