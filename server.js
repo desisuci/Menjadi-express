@@ -89,12 +89,37 @@ app.put('/profile/update/(:id)', async (req, res) => {
     res.status(statusCode).json(response);
 })
 
-//DElete data method get
+//Delete data method get --> Tanpa Validasi
+//url : http://localhost:3000/profile/delete/id
+// app.get('/profile/delete/(:id)', async (req, res) => {
+//     let statusCode = 200
+//     let message = "Delete Person"
+//     let person = await PersonModel.findByIdAndDelete(req.params.id).exec();
+//     const response = {
+//         statusCode: statusCode,
+//         error: message,
+//         message: message,
+//         content: person
+//     }
+//     res.status(statusCode).json(response);
+// })
+
+//Delete data method get --> menggunakan validasi
 //url : http://localhost:3000/profile/delete/id
 app.get('/profile/delete/(:id)', async (req, res) => {
+    const checkId = Mongoose.Types.ObjectId.isValid(req.params.is)
+    //check dataobject id valid jika valid lakukan eksekusi delete
     let statusCode = 200
     let message = "Delete Person"
-    let person = await PersonModel.findByIdAndDelete(req.params.id).exec();
+
+    if (checkId) {
+        var person = await PersonModel.findByIdAndDelete(req.params.id).exec();
+    } else {
+        statusCode = 404
+        message = 'Object Id Invalid'
+        var person = null
+    }
+
     const response = {
         statusCode: statusCode,
         error: message,
