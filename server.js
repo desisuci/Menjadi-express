@@ -12,8 +12,8 @@ app.use(bodyParser.json()); //menangkap url dalam bentuk json
 //memanggil MongoConfig.js
 const Mongoose = require('./MongoModel/MongoConfig')
 const PersonModel = Mongoose.model("person", {
-    firstname: String,
-    lastname: String
+    firstName: String,
+    lastName: String
 });
 
 //membuat request post
