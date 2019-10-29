@@ -16,34 +16,34 @@ const PersonModel = Mongoose.model("person", {
     lastName: String
 });
 
-//membuat request post
+//membuat request post --> Tanpa Validasi
 // nama request firstName, lastName
-app.post('/profile', async (req, res) => {
-    const insert = {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName
-    }
-    var person = new PersonModel(insert);
-    var result = await person.save();
-    const response = {
-        statusCode: 200,
-        error: '',
-        message: 'create person',
-        content: result
-    }
-    res.json(response);
-})
+// app.post('/profile', async (req, res) => {
+//     const insert = {
+//         firstName: req.body.firstName,
+//         lastName: req.body.lastName
+//     }
+//     var person = new PersonModel(insert);
+//     var result = await person.save();
+//     const response = {
+//         statusCode: 200,
+//         error: '',
+//         message: 'create person',
+//         content: result
+//     }
+//     res.json(response);
+// })
 
-// membuat request post
-app.post('/hello', function (req, res) {
-    const respon = {
-        statusCode: 200,
-        error: '',
-        message: 'Hello JSON',
-        content: req.body
-    }
-    res.json(respon);
-})
+// // membuat request post
+// app.post('/hello', function (req, res) {
+//     const respon = {
+//         statusCode: 200,
+//         error: '',
+//         message: 'Hello JSON',
+//         content: req.body
+//     }
+//     res.json(respon);
+// })
 
 //menampilkan semua data
 //url http://localhost:3000/profile/list
@@ -111,7 +111,6 @@ app.get('/profile/delete/(:id)', async (req, res) => {
     //check dataobject id valid jika valid lakukan eksekusi delete
     let statusCode = 200
     let message = "Delete Person"
-
     if (checkId) {
         var person = await PersonModel.findByIdAndDelete(req.params.id).exec();
     } else {
@@ -119,7 +118,6 @@ app.get('/profile/delete/(:id)', async (req, res) => {
         message = 'Object Id Invalid'
         var person = null
     }
-
     const response = {
         statusCode: statusCode,
         error: message,
@@ -128,6 +126,41 @@ app.get('/profile/delete/(:id)', async (req, res) => {
     }
     res.status(statusCode).json(response);
 })
+
+//url : http://localhost:3000/profile/create
+app.post('/profile/create', async (req, res) => {
+    //Do something here
+    console.log(req.body)
+    if (!req.body.firstName) {
+        res.status(400).json({
+            statusCode: 400,
+            error: 'firstName parameter is required',
+            message: 'firstName parameter is required'
+        });
+    }
+    else if (!req.body.lastName) {
+        res.status(400).json({
+            statusCode: 400,
+            error: 'firstName parameter is required',
+            message: 'firstName parameter is required'
+        });
+    }
+    else {
+        const insert = {
+            firstName: req.body.firstName,
+            lastName: req.body.lastName
+        }
+        var person = new PersonModel(insert);
+        var result = await person.save();
+        const response = {
+            statusCode: 200,
+            error: '',
+            message: 'create person',
+            content: result
+        }
+        res.json(response);
+    }
+});
 
 //Run aplikasi
 app.get('/', (req, res) => res.send('Hello World!'))
