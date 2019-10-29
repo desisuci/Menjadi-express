@@ -1,0 +1,15 @@
+(Install express) :
+pertama :
+1. buka command prompt
+2. mkdir namaFolder (--> example : mkdir myapp)
+3. cd namaFolder (--> example : cd myapp)
+4. npm init
+5. npm i express --save (--> untuk install express)
+6. npm install -g nodemon (--> untuk install nodemon)
+7. npm i body-parser
+8. npm install mongoose (--> untuk install mongoose)
+
+(Run aplikasi ) :
+1. node server.js atau nodemon server.js
+2. aplikasi bisa dibuka di localhost:3000 (-->localhost sesuai yang dibuat)
+
