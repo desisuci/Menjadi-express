@@ -59,6 +59,21 @@ app.get('/profile/list', async (req, res) => {
     res.json(response);
 })
 
+//detail profile data method get
+//http://localhost:3000/profile/detail/idmongo
+app.get('/profile/detail/(:id)', async (req, res) => {
+    let statusCode = 200
+    let message = 'Detail Person'
+    let person = await PersonModel.findById(req.params.id).exec();
+    const response = {
+        statusCode: 200,
+        error: '',
+        message: message,
+        content: person
+    }
+    res.status(statusCode).json(response);
+})
+
 //Run aplikasi
 app.get('/', (req, res) => res.send('Hello World!'))
 
